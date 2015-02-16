@@ -1,2 +1,1 @@
-# Project_Euler
-Solutions to the problems on projecteuler.net
+My solutions to the <a href="https://projecteuler.net/">Project Euler</a> problems.
