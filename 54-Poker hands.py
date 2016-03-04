@@ -37,9 +37,8 @@ def rank(hand):
     if max(c.values()) == 4:
         return [8]
 
-    # but what if there 2 by 2 ?
     if max_suit(hand) >= 3 and max(c.values()) >= 2:
-        return [7, c.most_common()[0][0]]
+        return [7, sorted(c.most_common(), reverse=True)[0][0]]
 
     if max_suit(hand) == 5:
         return [6] + value
@@ -47,14 +46,13 @@ def rank(hand):
     if value in straights:
         return [5] + value
 
-    if max(c.values()) >= 3:
+    if max(c.values()) == 3:
         return [4, c.most_common()[0][0]]
 
-    # might think about returning the second pair, too... ?
     if sorted(c.values()) == [1, 2, 2]:
-        return [3, max(c.most_common()[0][0], c.most_common()[1][0])]
+        return [3, max(c.most_common()[0][0], c.most_common()[1][0]), min(c.most_common()[0][0], c.most_common()[1][0])]
 
-    if max(c.values()) >= 2:
+    if max(c.values()) == 2:
         return [2, c.most_common()[0][0]] + value
 
     return [1] + value
