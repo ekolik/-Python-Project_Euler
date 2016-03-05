@@ -5,15 +5,18 @@ def reverse(num):
     return int(str(num)[::-1])
 
 
-# palins[] == 0 => haven't checked yet
-# palins[] == 1 => checked: produces palindrome
-# palins[] == 2 => checked: lychrel number
+def is_palin(num):
+    return num == reverse(num) and len(str(num)) == len(str(reverse(num)))
 
-palins = [0]*limit
+# cache[] == 0 => haven't checked yet
+# cache[] == 1 => checked: produces palindrome
+# cache[] == 2 => checked: lychrel number
+
+cache = [0]*limit
 count = 0
 
 for num in range(limit):
-    if palins[num] == 0:
+    if cache[num] == 0:
         local = []
         sum = num
         for i in range(50):
@@ -22,14 +25,14 @@ for num in range(limit):
             if reverse(sum) < limit:
                 local.append(reverse(sum))
             sum += reverse(sum)
-            if sum == reverse(sum):
+            if is_palin(sum):
                 for j in local:
-                    palins[j] = 1
+                    cache[j] = 1
                 break
         else:
-            palins[num] = palins[reverse(num)] = 2
+            cache[num] = cache[reverse(num)] = 2
             count += 1
-    elif palins[num] == 2:
+    elif cache[num] == 2:
         count += 1
 
 print(count)
