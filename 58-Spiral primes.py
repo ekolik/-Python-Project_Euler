@@ -1,3 +1,6 @@
+import time
+start_time = time.time()
+
 def is_prime(num):
     if num <= 1:
         return False
@@ -28,3 +31,4 @@ while True:
         print(l)
         break
 
+print("--- execution time: %s seconds ---" % (time.time() - start_time))
