@@ -1,16 +1,11 @@
-def digits(num):
-    return len(str(num))
+num, den, count = 3, 2, 0
 
+for i in range(2, 1000):
+    prev_num = num
+    num += 2*den
+    den += prev_num
 
-def expansion(n):
-    if n == 8:
-        return [1393, 985, 1]
-    else:
-        prev = expansion(n-1)
-        curr = [2*prev[1] + prev[0], prev[1] + prev[0], prev[2]]
+    if len(str(num)) > len(str(den)):
+        count += 1
 
-        if digits(curr[0]) > digits(curr[1]):
-            curr[2] += 1
-        return curr
-
-print(expansion(999)[2])
+print(count)
