@@ -1,45 +1,25 @@
 from itertools import permutations
 
-def triangle():
-    trias = []
-    for n in range(45, 141):
-        trias.append(int(n*(n+1)/2))
-    return trias
 
+def formulae(m):
+    result = []
+    for n in range(19, 141):
+        if m == 3:
+            curr = int(n*(n+1)/2)
+        elif m == 4:
+            curr = int(n*n)
+        elif m == 5:
+            curr = int(n*(3*n-1)/2)
+        elif m == 6:
+            curr = int(n*(2*n-1))
+        elif m == 7:
+            curr = int(n*(5*n-3)/2)
+        elif m == 8:
+            curr = int(n*(3*n-2))
 
-def square():
-    squares = []
-    for n in range(32, 100):
-        squares.append(int(n*n))
-    return squares
-
-
-def pentagonal():
-    pentas = []
-    for n in range(26, 82):
-        pentas.append(int(n*(3*n-1)/2))
-    return pentas
-
-
-def hexagonal():
-    hexas = []
-    for n in range(23, 71):
-        hexas.append(int(n*(2*n-1)))
-    return hexas
-
-
-def heptagonal():
-    heptas = []
-    for n in range(21, 64):
-        heptas.append(int(n*(5*n-3)/2))
-    return heptas
-
-
-def octagonal():
-    octas = []
-    for n in range(19, 59):
-        octas.append(int(n*(3*n-2)))
-    return octas
+        if 999 < curr < 10000:
+            result.append(curr)
+    return result
 
 
 def cycle(first, second):
@@ -51,7 +31,7 @@ def cycle(first, second):
     for i in first:
         tails |= {str(i)[2:]}
 
-    #print(heads.intersection(tails))
+    # print(heads.intersection(tails))
 
     first_new = []
     for i in first:
@@ -66,17 +46,18 @@ def cycle(first, second):
     return [first_new, second_new]
 
 
-all = [triangle(), square(), pentagonal(), hexagonal(), heptagonal(), octagonal()]
+all_poss = [formulae(i) for i in range(3, 9)]
 perms = list(permutations(range(6)))
 
 for perm in perms:
-    first_num, second_num = cycle(all[perm[0]], all[perm[1]])
-    second_num, third_num = cycle(second_num, all[perm[2]])
-    third_num, forth_num = cycle(third_num, all[perm[3]])
-    forth_num, fifth_num = cycle(forth_num, all[perm[4]])
-    fifth_num, sixth_num = cycle(fifth_num, all[perm[5]])
+    first_num, second_num = cycle(all_poss[perm[0]], all_poss[perm[1]])
+    second_num, third_num = cycle(second_num, all_poss[perm[2]])
+    third_num, forth_num = cycle(third_num, all_poss[perm[3]])
+    forth_num, fifth_num = cycle(forth_num, all_poss[perm[4]])
+    fifth_num, sixth_num = cycle(fifth_num, all_poss[perm[5]])
     sixth_num, first_num = cycle(sixth_num, first_num)
 
+    # narrow down found arrays
     while first_num and second_num and third_num and forth_num and fifth_num and sixth_num:
         first_num, second_num = cycle(first_num, second_num)
         second_num, third_num = cycle(second_num, third_num)
@@ -85,7 +66,7 @@ for perm in perms:
         fifth_num, sixth_num = cycle(fifth_num, sixth_num)
         sixth_num, first_num = cycle(sixth_num, first_num)
 
-        if len(first_num)==len(second_num)==len(third_num)==len(forth_num)==len(fifth_num)==len(sixth_num)==1:
+        if len(first_num) == len(second_num) == len(third_num) == len(forth_num) == len(fifth_num) == len(sixth_num) == 1:
             print(first_num, second_num, third_num, forth_num, fifth_num, sixth_num)
             print(first_num[0]+second_num[0]+third_num[0]+forth_num[0]+fifth_num[0]+sixth_num[0])
             break
