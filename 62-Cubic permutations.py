@@ -1,27 +1,30 @@
 import time
+from collections import Counter
 start_time = time.time()
 
 n = 345
 
 while True:
-    #print(n)
-    curr = [n**3]
+    nums = [n**3]
+    digits = [''.join(sorted(str(nums[0])))]
+
     m = n+1
     while len(str(m**3)) == len(str(n**3)):
-        curr.append(m**3)
-        m += 1
+        nums.append(m**3)
+        curr_digit = ''.join(sorted(str(m**3)))
+        digits.append(curr_digit)
 
-    for i in range(len(curr)):
-        count = 0
-        for j in range(i+1, len(curr)):
-            if sorted(str(curr[i])) == sorted(str(curr[j])):
-                count += 1
-        if count == 4:
-            print(curr[i])
+        if Counter(digits)[curr_digit] == 5:
             break
+        m += 1
     else:
         n = m
         continue
+
+    for i in range(len(nums)):
+        if digits[i] == curr_digit:
+            print(nums[i])
+            break
     break
 
 print("--- execution time: %s seconds ---" % (time.time() - start_time))
