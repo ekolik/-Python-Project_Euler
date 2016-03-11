@@ -13,18 +13,15 @@ while True:
         nums.append(m**3)
         curr_digit = ''.join(sorted(str(m**3)))
         digits.append(curr_digit)
-
-        if Counter(digits)[curr_digit] == 5:
-            break
         m += 1
+    for i in range(len(digits)):
+        if Counter(digits)[digits[i]] == 5:
+            print(nums[i])
+            break
     else:
         n = m
         continue
 
-    for i in range(len(nums)):
-        if digits[i] == curr_digit:
-            print(nums[i])
-            break
     break
 
 print("--- execution time: %s seconds ---" % (time.time() - start_time))
